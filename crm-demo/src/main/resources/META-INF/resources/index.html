@@ -258,125 +258,127 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-card">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="mb-2 title-gradient">
-                        <i class="fas fa-users me-2"></i>CRM客户管理系统
-                    </h1>
-                    <p class="text-muted mb-0">简单、高效的客户关系管理</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="row g-3">
-                        <div class="col-4">
-                            <div class="stat-card">
-                                <i class="fas fa-users"></i>
-                                <div class="number" id="totalCount">0</div>
-                                <div class="label">总客户数</div>
+    <div id="app">
+        <div class="container">
+            <div class="header-card">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h1 class="mb-2 title-gradient">
+                            <i class="fas fa-users me-2"></i>CRM客户管理系统
+                        </h1>
+                        <p class="text-muted mb-0">简单、高效的客户关系管理</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row g-3">
+                            <div class="col-4">
+                                <div class="stat-card">
+                                    <i class="fas fa-users"></i>
+                                    <div class="number" id="totalCount">0</div>
+                                    <div class="label">总客户数</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-card success">
-                                <i class="fas fa-user-check"></i>
-                                <div class="number" id="activeCount">0</div>
-                                <div class="label">活跃客户</div>
+                            <div class="col-4">
+                                <div class="stat-card success">
+                                    <i class="fas fa-user-check"></i>
+                                    <div class="number" id="activeCount">0</div>
+                                    <div class="label">活跃客户</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="stat-card warning">
-                                <i class="fas fa-user-clock"></i>
-                                <div class="number" id="inactiveCount">0</div>
-                                <div class="label">非活跃</div>
+                            <div class="col-4">
+                                <div class="stat-card warning">
+                                    <i class="fas fa-user-clock"></i>
+                                    <div class="number" id="inactiveCount">0</div>
+                                    <div class="label">非活跃</div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="main-card">
+                <div class="row mb-4 align-items-center">
+                    <div class="col-md-6">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" id="searchInput" placeholder="搜索客户姓名...">
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button id="addBtn" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>添加客户
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive customer-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-user me-2"></i>姓名</th>
+                                <th><i class="fas fa-envelope me-2"></i>邮箱</th>
+                                <th><i class="fas fa-phone me-2"></i>电话</th>
+                                <th><i class="fas fa-building me-2"></i>公司</th>
+                                <th><i class="fas fa-toggle-on me-2"></i>状态</th>
+                                <th><i class="fas fa-cog me-2"></i>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTableBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="fas fa-user-slash"></i>
+                    <h4>暂无客户数据</h4>
+                    <p>点击上方"添加客户"按钮创建第一个客户</p>
                 </div>
             </div>
         </div>
         
-        <div class="main-card">
-            <div class="row mb-4 align-items-center">
-                <div class="col-md-6">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" class="form-control" id="searchInput" placeholder="搜索客户姓名...">
+        <div class="modal fade" id="customerModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">
+                            <i class="fas fa-user-plus me-2"></i>添加客户
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                </div>
-                <div class="col-md-6 text-end">
-                    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); event.stopPropagation(); openAddModal();">
-                        <i class="fas fa-plus me-2"></i>添加客户
-                    </button>
-                </div>
-            </div>
-            
-            <div class="table-responsive customer-table">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th><i class="fas fa-user me-2"></i>姓名</th>
-                            <th><i class="fas fa-envelope me-2"></i>邮箱</th>
-                            <th><i class="fas fa-phone me-2"></i>电话</th>
-                            <th><i class="fas fa-building me-2"></i>公司</th>
-                            <th><i class="fas fa-toggle-on me-2"></i>状态</th>
-                            <th><i class="fas fa-cog me-2"></i>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="customerTableBody">
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <i class="fas fa-user-slash"></i>
-                <h4>暂无客户数据</h4>
-                <p>点击上方"添加客户"按钮创建第一个客户</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="customerModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">
-                        <i class="fas fa-user-plus me-2"></i>添加客户
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="customerForm">
-                        <input type="hidden" id="customerId">
-                        <div class="mb-3">
-                            <label class="form-label">姓名 <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" required>
+                    <div class="modal-body">
+                        <div id="customerForm">
+                            <input type="hidden" id="customerId">
+                            <div class="mb-3">
+                                <label class="form-label">姓名 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">邮箱</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">电话</label>
+                                <input type="text" class="form-control" id="phone">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">公司</label>
+                                <input type="text" class="form-control" id="company">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">状态</label>
+                                <select class="form-select" id="status">
+                                    <option value="ACTIVE">活跃</option>
+                                    <option value="INACTIVE">非活跃</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">邮箱</label>
-                            <input type="email" class="form-control" id="email">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">电话</label>
-                            <input type="text" class="form-control" id="phone">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">公司</label>
-                            <input type="text" class="form-control" id="company">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">状态</label>
-                            <select class="form-select" id="status">
-                                <option value="ACTIVE">活跃</option>
-                                <option value="INACTIVE">非活跃</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); event.stopPropagation(); saveCustomer();">
-                        <i class="fas fa-save me-2"></i>保存
-                    </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button id="saveBtn" type="button" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>保存
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -387,222 +389,243 @@
     <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
-        let modal;
-        
         $(document).ready(function() {
-            modal = new bootstrap.Modal(document.getElementById('customerModal'));
+            let modal = new bootstrap.Modal(document.getElementById('customerModal'));
+            
             loadCustomers();
             updateStats();
             
-            $('#searchInput').on('input', function() {
+            // 事件委托：添加客户按钮
+            $('#app').on('click', '#addBtn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openAddModal(modal);
+            });
+            
+            // 事件委托：保存按钮
+            $('#app').on('click', '#saveBtn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                saveCustomer(modal);
+            });
+            
+            // 事件委托：编辑按钮
+            $('#app').on('click', '.edit-btn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = $(this).data('id');
+                editCustomer(id, modal);
+            });
+            
+            // 事件委托：切换状态按钮
+            $('#app').on('click', '.toggle-btn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = $(this).data('id');
+                toggleStatus(id);
+            });
+            
+            // 事件委托：删除按钮
+            $('#app').on('click', '.delete-btn', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const id = $(this).data('id');
+                const name = $(this).data('name');
+                deleteCustomer(id, name);
+            });
+            
+            // 事件委托：搜索输入
+            $('#app').on('input', '#searchInput', function() {
                 loadCustomers($(this).val());
             });
-        });
-        
-        function loadCustomers(keyword = '') {
-            const url = keyword ? `/api/customers/search?keyword=${encodeURIComponent(keyword)}` : '/api/customers';
             
-            $.get(url, function(customers) {
-                renderTable(customers);
-            }).fail(function() {
-                showToast('加载客户数据失败', 'danger');
-            });
-        }
-        
-        function renderTable(customers) {
-            const tbody = $('#customerTableBody');
-            tbody.empty();
-            
-            if (customers.length === 0) {
-                $('#emptyState').show();
-                $('.table-responsive').hide();
-                return;
-            }
-            
-            $('#emptyState').hide();
-            $('.table-responsive').show();
-            
-            customers.forEach(customer => {
-                const statusClass = customer.status === 'ACTIVE' ? 'status-active' : 'status-inactive';
-                const statusText = customer.status === 'ACTIVE' ? '活跃' : '非活跃';
+            function loadCustomers(keyword = '') {
+                const url = keyword ? `/api/customers/search?keyword=${encodeURIComponent(keyword)}` : '/api/customers';
                 
-                tbody.append(`
-                    <tr>
-                        <td><strong>${escapeHtml(customer.name)}</strong></td>
-                        <td>${escapeHtml(customer.email || '-')}</td>
-                        <td>${escapeHtml(customer.phone || '-')}</td>
-                        <td>${escapeHtml(customer.company || '-')}</td>
-                        <td>
-                            <span class="status-badge ${statusClass}">
-                                <i class="fas fa-${customer.status === 'ACTIVE' ? 'check-circle' : 'times-circle'} me-1"></i>
-                                ${statusText}
-                            </span>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary btn-action me-2" onclick="event.preventDefault(); event.stopPropagation(); editCustomer(${customer.id});">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-warning btn-action me-2" onclick="event.preventDefault(); event.stopPropagation(); toggleStatus(${customer.id});">
-                                <i class="fas fa-toggle-on"></i>
-                            </button>
-                            <button type="button" class="btn btn-outline-danger btn-action" onclick="event.preventDefault(); event.stopPropagation(); deleteCustomer(${customer.id}, '${escapeHtml(customer.name)}');">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `);
-            });
-        }
-        
-        function updateStats() {
-            $.get('/api/customers/stats', function(stats) {
-                $('#totalCount').text(stats.total);
-                $('#activeCount').text(stats.active);
-                $('#inactiveCount').text(stats.inactive);
-            });
-        }
-        
-        function openAddModal() {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
+                $.get(url, function(customers) {
+                    renderTable(customers);
+                }).fail(function() {
+                    showToast('加载客户数据失败', 'danger');
+                });
             }
             
-            $('#modalTitle').html('<i class="fas fa-user-plus me-2"></i>添加客户');
-            $('#customerForm')[0].reset();
-            $('#customerId').val('');
-            modal.show();
-        }
-        
-        function editCustomer(id) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
+            function renderTable(customers) {
+                const tbody = $('#customerTableBody');
+                tbody.empty();
+                
+                if (customers.length === 0) {
+                    $('#emptyState').show();
+                    $('.table-responsive').hide();
+                    return;
+                }
+                
+                $('#emptyState').hide();
+                $('.table-responsive').show();
+                
+                customers.forEach(customer => {
+                    const statusClass = customer.status === 'ACTIVE' ? 'status-active' : 'status-inactive';
+                    const statusText = customer.status === 'ACTIVE' ? '活跃' : '非活跃';
+                    
+                    tbody.append(`
+                        <tr>
+                            <td><strong>${escapeHtml(customer.name)}</strong></td>
+                            <td>${escapeHtml(customer.email || '-')}</td>
+                            <td>${escapeHtml(customer.phone || '-')}</td>
+                            <td>${escapeHtml(customer.company || '-')}</td>
+                            <td>
+                                <span class="status-badge ${statusClass}">
+                                    <i class="fas fa-${customer.status === 'ACTIVE' ? 'check-circle' : 'times-circle'} me-1"></i>
+                                    ${statusText}
+                                </span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-primary btn-action me-2 edit-btn" data-id="${customer.id}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-warning btn-action me-2 toggle-btn" data-id="${customer.id}">
+                                    <i class="fas fa-toggle-on"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-action delete-btn" data-id="${customer.id}" data-name="${escapeHtml(customer.name)}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                });
             }
             
-            $.get(`/api/customers/${id}`, function(customer) {
-                $('#modalTitle').html('<i class="fas fa-edit me-2"></i>编辑客户');
-                $('#customerId').val(customer.id);
-                $('#name').val(customer.name);
-                $('#email').val(customer.email);
-                $('#phone').val(customer.phone);
-                $('#company').val(customer.company);
-                $('#status').val(customer.status);
+            function updateStats() {
+                $.get('/api/customers/stats', function(stats) {
+                    $('#totalCount').text(stats.total);
+                    $('#activeCount').text(stats.active);
+                    $('#inactiveCount').text(stats.inactive);
+                });
+            }
+            
+            function openAddModal(modal) {
+                $('#modalTitle').html('<i class="fas fa-user-plus me-2"></i>添加客户');
+                // 清空表单
+                $('#customerId').val('');
+                $('#name').val('');
+                $('#email').val('');
+                $('#phone').val('');
+                $('#company').val('');
+                $('#status').val('ACTIVE');
                 modal.show();
-            }).fail(function() {
-                showToast('获取客户信息失败', 'danger');
-            });
-        }
-        
-        function saveCustomer() {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
             }
             
-            const id = $('#customerId').val();
-            const customer = {
-                name: $('#name').val(),
-                email: $('#email').val(),
-                phone: $('#phone').val(),
-                company: $('#company').val(),
-                status: $('#status').val()
-            };
-            
-            if (!customer.name.trim()) {
-                showToast('请输入客户姓名', 'warning');
-                return;
+            function editCustomer(id, modal) {
+                $.get(`/api/customers/${id}`, function(customer) {
+                    $('#modalTitle').html('<i class="fas fa-edit me-2"></i>编辑客户');
+                    $('#customerId').val(customer.id);
+                    $('#name').val(customer.name);
+                    $('#email').val(customer.email);
+                    $('#phone').val(customer.phone);
+                    $('#company').val(customer.company);
+                    $('#status').val(customer.status);
+                    modal.show();
+                }).fail(function() {
+                    showToast('获取客户信息失败', 'danger');
+                });
             }
             
-            const method = id ? 'PUT' : 'POST';
-            const url = id ? `/api/customers/${id}` : '/api/customers';
-            
-            $.ajax({
-                url: url,
-                type: method,
-                contentType: 'application/json',
-                data: JSON.stringify(customer),
-                success: function() {
-                    modal.hide();
-                    loadCustomers();
-                    updateStats();
-                    showToast(id ? '客户信息已更新' : '客户添加成功', 'success');
-                },
-                error: function() {
-                    showToast('保存失败', 'danger');
+            function saveCustomer(modal) {
+                const id = $('#customerId').val();
+                const customer = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    company: $('#company').val(),
+                    status: $('#status').val()
+                };
+                
+                if (!customer.name.trim()) {
+                    showToast('请输入客户姓名', 'warning');
+                    return;
                 }
-            });
-        }
-        
-        function toggleStatus(id) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            
-            $.ajax({
-                url: `/api/customers/${id}/toggle-status`,
-                type: 'PATCH',
-                success: function() {
-                    loadCustomers();
-                    updateStats();
-                    showToast('状态已切换', 'success');
-                },
-                error: function() {
-                    showToast('操作失败', 'danger');
-                }
-            });
-        }
-        
-        function deleteCustomer(id, name) {
-            event.preventDefault();
-            event.stopPropagation();
-            
-            if (confirm(`确定要删除客户"${name}"吗？此操作不可撤销。`)) {
+                
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `/api/customers/${id}` : '/api/customers';
+                
                 $.ajax({
-                    url: `/api/customers/${id}`,
-                    type: 'DELETE',
+                    url: url,
+                    type: method,
+                    contentType: 'application/json',
+                    data: JSON.stringify(customer),
                     success: function() {
+                        modal.hide();
                         loadCustomers();
                         updateStats();
-                        showToast('客户已删除', 'success');
+                        showToast(id ? '客户信息已更新' : '客户添加成功', 'success');
                     },
-                    error: function(jqXHR) {
-                        let errorMsg = '删除失败';
-                        if (jqXHR.status === 404) {
-                            errorMsg = '客户不存在';
-                        }
-                        showToast(errorMsg, 'danger');
+                    error: function() {
+                        showToast('保存失败', 'danger');
                     }
                 });
             }
-        }
-        
-        function showToast(message, type = 'info') {
-            const toast = $(`
-                <div class="toast show align-items-center text-white bg-${type} border-0" role="alert">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
-                            ${message}
+            
+            function toggleStatus(id) {
+                $.ajax({
+                    url: `/api/customers/${id}/toggle-status`,
+                    type: 'PATCH',
+                    success: function() {
+                        loadCustomers();
+                        updateStats();
+                        showToast('状态已切换', 'success');
+                    },
+                    error: function() {
+                        showToast('操作失败', 'danger');
+                    }
+                });
+            }
+            
+            function deleteCustomer(id, name) {
+                if (confirm(`确定要删除客户"${name}"吗？此操作不可撤销。`)) {
+                    $.ajax({
+                        url: `/api/customers/${id}`,
+                        type: 'DELETE',
+                        success: function() {
+                            loadCustomers();
+                            updateStats();
+                            showToast('客户已删除', 'success');
+                        },
+                        error: function(jqXHR) {
+                            let errorMsg = '删除失败';
+                            if (jqXHR.status === 404) {
+                                errorMsg = '客户不存在';
+                            }
+                            showToast(errorMsg, 'danger');
+                        }
+                    });
+                }
+            }
+            
+            function showToast(message, type = 'info') {
+                const toast = $(`
+                    <div class="toast show align-items-center text-white bg-${type} border-0" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+                                ${message}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `);
+                `);
+                
+                $('#toastContainer').append(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
             
-            $('#toastContainer').append(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-        
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        });
     </script>
 </body>
 </html>
