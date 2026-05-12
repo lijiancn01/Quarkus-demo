@@ -56,7 +56,12 @@ public class CustomerService {
     
     @Transactional
     public boolean deleteCustomer(Long id) {
-        return customerRepository.deleteById(id);
+        Customer customer = customerRepository.findById(id);
+        if (customer == null) {
+            return false;
+        }
+        customerRepository.delete(customer);
+        return true;
     }
     
     @Transactional

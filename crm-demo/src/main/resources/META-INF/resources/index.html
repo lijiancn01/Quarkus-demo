@@ -544,8 +544,12 @@
                         updateStats();
                         showToast('客户已删除', 'success');
                     },
-                    error: function() {
-                        showToast('删除失败', 'danger');
+                    error: function(jqXHR) {
+                        let errorMsg = '删除失败';
+                        if (jqXHR.status === 404) {
+                            errorMsg = '客户不存在';
+                        }
+                        showToast(errorMsg, 'danger');
                     }
                 });
             }
