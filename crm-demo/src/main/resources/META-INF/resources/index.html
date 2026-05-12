@@ -304,7 +304,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 text-end">
-                    <button class="btn btn-primary" onclick="openAddModal()">
+                    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); event.stopPropagation(); openAddModal();">
                         <i class="fas fa-plus me-2"></i>添加客户
                     </button>
                 </div>
@@ -374,7 +374,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="saveCustomer()">
+                    <button type="button" class="btn btn-primary" onclick="event.preventDefault(); event.stopPropagation(); saveCustomer();">
                         <i class="fas fa-save me-2"></i>保存
                     </button>
                 </div>
@@ -439,13 +439,13 @@
                             </span>
                         </td>
                         <td>
-                            <button class="btn btn-outline-primary btn-action me-2" onclick="editCustomer(${customer.id})">
+                            <button type="button" class="btn btn-outline-primary btn-action me-2" onclick="event.preventDefault(); event.stopPropagation(); editCustomer(${customer.id});">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-outline-warning btn-action me-2" onclick="toggleStatus(${customer.id})">
+                            <button type="button" class="btn btn-outline-warning btn-action me-2" onclick="event.preventDefault(); event.stopPropagation(); toggleStatus(${customer.id});">
                                 <i class="fas fa-toggle-on"></i>
                             </button>
-                            <button class="btn btn-outline-danger btn-action" onclick="deleteCustomer(${customer.id}, '${escapeHtml(customer.name)}')">
+                            <button type="button" class="btn btn-outline-danger btn-action" onclick="event.preventDefault(); event.stopPropagation(); deleteCustomer(${customer.id}, '${escapeHtml(customer.name)}');">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -463,6 +463,11 @@
         }
         
         function openAddModal() {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             $('#modalTitle').html('<i class="fas fa-user-plus me-2"></i>添加客户');
             $('#customerForm')[0].reset();
             $('#customerId').val('');
@@ -470,6 +475,11 @@
         }
         
         function editCustomer(id) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             $.get(`/api/customers/${id}`, function(customer) {
                 $('#modalTitle').html('<i class="fas fa-edit me-2"></i>编辑客户');
                 $('#customerId').val(customer.id);
@@ -485,6 +495,11 @@
         }
         
         function saveCustomer() {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             const id = $('#customerId').val();
             const customer = {
                 name: $('#name').val(),
@@ -520,6 +535,11 @@
         }
         
         function toggleStatus(id) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             $.ajax({
                 url: `/api/customers/${id}/toggle-status`,
                 type: 'PATCH',
@@ -535,6 +555,9 @@
         }
         
         function deleteCustomer(id, name) {
+            event.preventDefault();
+            event.stopPropagation();
+            
             if (confirm(`确定要删除客户"${name}"吗？此操作不可撤销。`)) {
                 $.ajax({
                     url: `/api/customers/${id}`,
