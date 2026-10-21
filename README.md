@@ -148,6 +148,10 @@ quarkus.hibernate-orm.database.generation=drop-and-create
 - 实时编译和错误提示
 - 数据库管理界面
 
+## 代理配置注意事项
+
+仓库根目录的 `settings.xml` 默认启用了指向 `127.0.0.1:18080` 的 HTTPS 本地代理（`<active>true</active>`）。该配置仅在本机确实有代理监听时适用；在其他机器或 CI 环境中直接套用此文件会让构建请求失败。若不需要代理，clone 后请删除 `<proxies>` 配置块，或构建时不要通过 `-s settings.xml` 指定该文件。
+
 ## 许可证
 
 MIT License
